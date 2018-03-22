@@ -2,12 +2,20 @@ console.log('Starting app.js');
 
 const fs = require('fs');
 const os = require('os');
-const notes = require('./notes.js')
+const _ = require('lodash');
+const notes = require('./notes.js');
 
-let res = notes.addNote();
-console.log(res);
+console.log(_.isString(true));
+console.log(_.isString('George'));
+let filteredArray = _.uniq(['George', 1, 'George', 1, 2, 3, 4]);
+console.log(filteredArray);
+let setArray = new Set(['George', 1, 'George', 1, 2, 3, 4]);
+console.log(Array.from(setArray));
 
-console.log(notes.add(1, 3));
+// let res = notes.addNote();
+// console.log(res);
+
+// console.log(notes.add(1, 3));
 
 // let user = os.userInfo();
 
