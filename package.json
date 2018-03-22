@@ -1,0 +1,26 @@
+{
+  "name": "nodejs_dev_course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^4.19.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georich/nodejs_dev_course.git"
+  },
+  "author": "George",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/georich/nodejs_dev_course/issues"
+  },
+  "homepage": "https://github.com/georich/nodejs_dev_course#readme"
+}
