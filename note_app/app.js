@@ -1,4 +1,4 @@
-console.log('Starting app.js');
+// console.log('Starting app.js');
 
 const fs = require('fs');
 // const os = require('os');
@@ -9,8 +9,8 @@ const notes = require('./notes.js');
 
 const argv = yargs.argv;
 let command = argv._[0];
-console.log(`Command: ${command}`);
-console.log('Yargs', argv);
+// console.log(`Command: ${command}`);
+// console.log('Yargs', argv);
 
 if (command === 'add') {
   let note = notes.addNote(argv.title, argv.body);
@@ -20,7 +20,11 @@ if (command === 'add') {
     console.log(`A note with the title "${argv.title}" already exists`);
   }
 } else if (command === 'list') {
-  notes.getAll();
+  let allNotes = notes.getAll();
+  console.log(`Printing ${allNotes.length} note(s)`);
+  for (let note of allNotes) {
+    console.log(`"${note.title}" reads: "${note.body}"`);
+  }
 } else if (command === 'read') {
   let wantedNote = notes.getNote(argv.title);
   let message = wantedNote ? `The note "${argv.title}" reads: "${wantedNote}"` : 'Note not found';
