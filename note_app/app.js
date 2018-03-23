@@ -22,11 +22,13 @@ if (command === 'add') {
 } else if (command === 'list') {
   notes.getAll();
 } else if (command === 'read') {
-  notes.getNote(argv.title);
+  let wantedNote = notes.getNote(argv.title);
+  let message = wantedNote ? `The note "${argv.title}" reads: "${wantedNote}"` : 'Note not found';
+  console.log(message);
 } else if (command === 'remove') {
   let noteRemoved = notes.removeNote(argv.title);
   let message = noteRemoved ? `Note "${argv.title}" removed` : 'Note not found';
   console.log(message);
 } else {
-  console.log('Commannd not recognised');
+  console.log('Command not recognised');
 }
