@@ -1,5 +1,3 @@
-// const expect = require('expect');
-
 const utils = require('./utils');
 
 describe('Utils', () => {
