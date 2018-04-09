@@ -31,7 +31,7 @@ let userSchema = new mongoose.Schema({
   }]
 });
 
-userSchema.methods.toJSON = function () {
+userSchema.methods.toJSON = function () { // instance method
   let user = this;
   
   return {
@@ -40,7 +40,7 @@ userSchema.methods.toJSON = function () {
   };
 };
 
-userSchema.methods.generateAuthToken = function () {
+userSchema.methods.generateAuthToken = function () { // instance method
   let user = this;
   let access = 'auth';
   let token = jwt.sign({_id: user._id.toHexString(), access}, 'salty').toString();
@@ -49,6 +49,26 @@ userSchema.methods.generateAuthToken = function () {
 
   return user.save().then(() => {
     return token;
+  });
+};
+
+userSchema.statics.findByToken = function (token) { // model method
+  let User = this;
+  let decoded;
+
+  try {
+    decoded = jwt.verify(token, 'salty');
+  } catch (e) {
+    // return new Promise((resolve, reject) => {
+    //   reject();
+    // });
+    return Promise.reject();
+  }
+
+  return User.findOne({
+    _id: decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
   });
 };
 
