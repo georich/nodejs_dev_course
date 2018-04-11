@@ -98,7 +98,6 @@ app.post('/users', (req, res) => {
   let user = new User(body);
 
   user.save().then(() => {
-    // res.send(user);
     return user.generateAuthToken();
   }).then((token) => {
     res.header('x-auth', token).send(user)
@@ -108,17 +107,20 @@ app.post('/users', (req, res) => {
 });
 
 app.get('/users/me', authenticate, (req, res) => {
-  // let token = req.header('x-auth');
-
-  // User.findByToken(token).then((user) => {
-  //   if (!user) {
-  //     return Promise.reject();
-  //   }
-  //   res.send(user);
-  // }).catch((e) => {
-  //   res.status(401).send();
-  // });
   res.send(req.user);
+});
+
+app.post('/users/login', (req, res) => {
+  let body = {email, password} = req.body;
+
+  User.findByCredentials(body.email, body.password).then((user) => {
+    // res.send(user);
+    return user.generateAuthToken().then((token) => {
+      res.header('x-auth', token).send(user);
+    });
+  }).catch((e) => {
+    res.status(400).send();
+  });
 });
 
 app.listen(port, () => {
