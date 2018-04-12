@@ -17,17 +17,23 @@ const users = [{
 }, {
   _id: userTwoId,
   email: 'alice@example.com',
-  password: 'userTwoPass'
+  password: 'userTwoPass',
+  tokens: [{
+    access: 'auth',
+    token: jwt.sign({_id: userTwoId, access: 'auth'}, 'salty').toString()
+  }]
 }];
 
 const todos = [{
   _id: new ObjectID(),
-  text: 'First test todo'
+  text: 'First test todo',
+  _creator: userOneId
 }, {
   _id: new ObjectID(),
   text: 'Second test todo',
   completed: true,
-  completedAt: 15000
+  completedAt: 15000,
+  _creator: userTwoId
 }];
 
 const populateTodos = (done) => { // Wipes database and inserts seed data
