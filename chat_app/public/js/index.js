@@ -1,5 +1,25 @@
 const socket = io();
 
+const scrollToBottom = () => {
+  // Selectors
+  let messages = document.getElementById('messages');
+  let newMessage = messages.lastElementChild;
+  // Heights
+  let clientHeight = messages.clientHeight;
+  let scrollTop = messages.scrollTop;
+  let scrollHeight = messages.scrollHeight;
+  let newMessageHeight = newMessage.clientHeight;
+  let lastMessage = newMessage.previousElementSibling;
+  let lastMessageHeight;
+  if (lastMessage) {
+    lastMessageHeight = lastMessage.clientHeight;
+  }
+
+  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    messages.scrollTop = scrollHeight;
+  }
+};
+
 socket.on('connect', () => {
   console.log('Connected to server');
 
@@ -26,6 +46,8 @@ socket.on('newMessage', (message) => {
 
   document.getElementById('messages').appendChild(htmlParsed);
 
+  scrollToBottom();
+
   // let formattedTime = moment(message.createdAt).format('h:mm a');
   // let li = document.createElement('li');
   // li.textContent = `${message.from} ${formattedTime}: ${message.text}`;
@@ -44,6 +66,8 @@ socket.on('newLocationMessage', (message) => {
   let htmlParsed = document.createRange().createContextualFragment(html);
 
   document.getElementById('messages').appendChild(htmlParsed);
+
+  scrollToBottom();
 
   // let formattedTime = moment(message.createdAt).format('h:mm a');
   // let li = document.createElement('li');
