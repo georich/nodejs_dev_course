@@ -15,25 +15,46 @@ socket.on('disconnect', () => {
 
 socket.on('newMessage', (message) => {
   // console.log('New message', message);
-
   let formattedTime = moment(message.createdAt).format('h:mm a');
-  let li = document.createElement('li');
-  li.textContent = `${message.from} ${formattedTime}: ${message.text}`;
+  let template = document.getElementById('message-template').innerHTML
+  let html = Mustache.render(template, {
+    text: message.text,
+    from: message.from,
+    createdAt: formattedTime
+  });
+  let htmlParsed = document.createRange().createContextualFragment(html);
 
-  document.getElementById('messages').appendChild(li);
+  document.getElementById('messages').appendChild(htmlParsed);
+
+  // let formattedTime = moment(message.createdAt).format('h:mm a');
+  // let li = document.createElement('li');
+  // li.textContent = `${message.from} ${formattedTime}: ${message.text}`;
+  //
+  // document.getElementById('messages').appendChild(li);
 });
 
 socket.on('newLocationMessage', (message) => {
   let formattedTime = moment(message.createdAt).format('h:mm a');
-  let li = document.createElement('li');
-  let a = document.createElement('a')
-  a.textContent = 'My current location';
-  a.setAttribute('target', '_blank');
+  let template = document.getElementById('location-message-template').innerHTML
+  let html = Mustache.render(template, {
+    url: message.url,
+    from: message.from,
+    createdAt: formattedTime
+  });
+  let htmlParsed = document.createRange().createContextualFragment(html);
 
-  li.textContent = `${message.from} ${formattedTime}: `;
-  a.setAttribute('href', message.url);
-  li.appendChild(a);
-  document.getElementById('messages').appendChild(li);
+  document.getElementById('messages').appendChild(htmlParsed);
+
+  // let formattedTime = moment(message.createdAt).format('h:mm a');
+  // let li = document.createElement('li');
+  // let a = document.createElement('a')
+  // a.textContent = 'My current location';
+  // a.setAttribute('target', '_blank');
+  //
+  // li.textContent = `${message.from} ${formattedTime}: `;
+  // a.setAttribute('href', message.url);
+  // li.appendChild(a);
+  // document.getElementById('messages').appendChild(li);
 });
 
 // socket.emit('createMessage', {
