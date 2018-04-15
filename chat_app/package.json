@@ -17,6 +17,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "moment": "^2.22.0",
+    "search-params": "^2.1.2",
     "socket.io": "^2.1.0"
   },
   "devDependencies": {

@@ -1,3 +1,5 @@
+import {parse, build} from './libs/search-params.js';
+
 const socket = io();
 
 const scrollToBottom = () => {
@@ -21,7 +23,18 @@ const scrollToBottom = () => {
 };
 
 socket.on('connect', () => {
-  console.log('Connected to server');
+  // console.log('Connected to server');
+  let params = parse(window.location.search);
+  // console.log(params);
+
+  socket.emit('join', params, (err) => {
+    if (err) {
+      alert(err);
+      window.location.href = '/';
+    } else {
+      console.log('No error');
+    }
+  });
 
   // socket.emit('createMessage', {
   //   to: 'Alice',
@@ -31,6 +44,18 @@ socket.on('connect', () => {
 
 socket.on('disconnect', () => {
   console.log('Disconnected from server');
+});
+
+socket.on('updateUserList', (users) => {
+  let ol = document.createElement('ol');
+
+  users.forEach((user) => {
+    let li = document.createElement('li');
+    li.textContent = user;
+    ol.appendChild(li);
+  });
+
+  document.getElementById('users').innerHTML = ol.outerHTML;
 });
 
 socket.on('newMessage', (message) => {
