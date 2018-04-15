@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createMessage', (message, callback) => {
-    let user = users.getUser(socket.id);
+    const user = users.getUser(socket.id);
 
     if (user && isRealString(message.text)) {
       io.to(user.room).emit('newMessage', generateMessage(user.name, message.text)); // emits to all connections
@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createLocationMessage', (coords) => {
-    let user = users.getUser(socket.id);
+    const user = users.getUser(socket.id);
 
     if (user) {
       io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
@@ -69,7 +69,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    let user = users.removeUser(socket.id);
+    const user = users.removeUser(socket.id);
 
     if (user) {
       io.to(user.room).emit('updateUserList', users.getUserList(user.room));

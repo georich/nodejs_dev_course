@@ -1,4 +1,4 @@
-const {Users} = require('./users');
+const { Users } = require('./users');
 
 describe('Users', () => {
   let users;
@@ -21,13 +21,13 @@ describe('Users', () => {
 
   describe('#addUser', () => {
     it('should add new user', () => {
-      let users = new Users();
-      let user = {
+      const users = new Users();
+      const user = {
         id: '1234',
         name: 'George',
         room: 'Test Room'
       };
-      let resUser = users.addUser(user.id, user.name, user.room);
+      const resUser = users.addUser(user.id, user.name, user.room);
 
       expect(users.users).toEqual([user]);
     });
@@ -35,16 +35,16 @@ describe('Users', () => {
 
   describe('#removeUser', () => {
     it('should remove a user', () => {
-      let userId = '1';
-      let result = users.removeUser(userId);
+      const userId = '1';
+      const result = users.removeUser(userId);
 
       expect(result.id).toBe(userId);
       expect(users.users.length).toBe(2);
     });
 
     it('should not remove user', () => {
-      let userId = '123';
-      let result = users.removeUser(userId);
+      const userId = '123';
+      const result = users.removeUser(userId);
 
       expect(result).toBeFalsy();
       expect(users.users.length).toBe(3);
@@ -53,15 +53,15 @@ describe('Users', () => {
 
   describe('#getUser', () => {
     it('should find user', () => {
-      let userId = '1';
-      let result = users.getUser(userId);
+      const userId = '1';
+      const result = users.getUser(userId);
 
       expect(result).toEqual(users.users[0]);
     });
 
     it('should not find user', () => {
-      let userId = '123';
-      let result = users.getUser(userId);
+      const userId = '123';
+      const result = users.getUser(userId);
 
       expect(result).toBeFalsy();
     });
@@ -69,13 +69,13 @@ describe('Users', () => {
 
   describe('#getUserList', () => {
     it('should return names for test room', () => {
-      let userList = users.getUserList('Test Room');
+      const userList = users.getUserList('Test Room');
 
       expect(userList).toEqual(['George', 'Bonje']);
     });
 
     it('should return names for book room', () => {
-      let userList = users.getUserList('Book Room');
+      const userList = users.getUserList('Book Room');
 
       expect(userList).toEqual(['Alice']);
     });

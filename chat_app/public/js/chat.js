@@ -1,4 +1,4 @@
-import {parse, build} from './libs/search-params.js';
+import { parse, build } from './libs/search-params.js';
 
 const socket = io();
 
@@ -24,7 +24,7 @@ const scrollToBottom = () => {
 
 socket.on('connect', () => {
   // console.log('Connected to server');
-  let params = parse(window.location.search);
+  const params = parse(window.location.search);
   // console.log(params);
 
   socket.emit('join', params, (err) => {
@@ -47,7 +47,7 @@ socket.on('disconnect', () => {
 });
 
 socket.on('updateUserList', (users) => {
-  let ol = document.createElement('ol');
+  const ol = document.createElement('ol');
 
   users.forEach((user) => {
     let li = document.createElement('li');
@@ -60,14 +60,14 @@ socket.on('updateUserList', (users) => {
 
 socket.on('newMessage', (message) => {
   // console.log('New message', message);
-  let formattedTime = moment(message.createdAt).format('h:mm a');
-  let template = document.getElementById('message-template').innerHTML
-  let html = Mustache.render(template, {
+  const formattedTime = moment(message.createdAt).format('h:mm a');
+  const template = document.getElementById('message-template').innerHTML
+  const html = Mustache.render(template, {
     text: message.text,
     from: message.from,
     createdAt: formattedTime
   });
-  let htmlParsed = document.createRange().createContextualFragment(html);
+  const htmlParsed = document.createRange().createContextualFragment(html);
 
   document.getElementById('messages').appendChild(htmlParsed);
 
@@ -81,14 +81,14 @@ socket.on('newMessage', (message) => {
 });
 
 socket.on('newLocationMessage', (message) => {
-  let formattedTime = moment(message.createdAt).format('h:mm a');
-  let template = document.getElementById('location-message-template').innerHTML
-  let html = Mustache.render(template, {
+  const formattedTime = moment(message.createdAt).format('h:mm a');
+  const template = document.getElementById('location-message-template').innerHTML
+  const html = Mustache.render(template, {
     url: message.url,
     from: message.from,
     createdAt: formattedTime
   });
-  let htmlParsed = document.createRange().createContextualFragment(html);
+  const htmlParsed = document.createRange().createContextualFragment(html);
 
   document.getElementById('messages').appendChild(htmlParsed);
 
@@ -123,7 +123,7 @@ document.getElementById('message-form').addEventListener('submit', (e) => {
   });
 });
 
-let locationButton = document.getElementById('send-location');
+const locationButton = document.getElementById('send-location');
 locationButton.addEventListener('click', () => {
   if (!navigator.geolocation) {
     return alert('Geolocation not supported by your browser.');
